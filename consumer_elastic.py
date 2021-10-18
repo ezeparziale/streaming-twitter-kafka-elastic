@@ -6,7 +6,7 @@ import config
 def main():             
     consumer = KafkaConsumer(config.TOPIC_NAME)
     try:
-        es = Elasticsearch(hosts="http://elastic:somethingsecret@localhost:9200/")        
+        es = Elasticsearch(hosts=f"http://{config.ELASTIC_USER}:{config.ELASTIC_PASS}@{config.ELASTIC_SERVER}/")        
         for msg in consumer:
             output = []
             output.append(json.loads(msg.value))
