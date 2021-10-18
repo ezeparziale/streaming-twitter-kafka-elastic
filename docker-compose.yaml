@@ -38,32 +38,25 @@ services:
 
   elastic-search:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
-    container_name: es01-test
+    container_name: elastic1
     networks:
       - kakfa-net
     ports:
       - 9200:9200
       - 9300:9300
-    environment:
-      - discovery.type=single-node
-      - cluster.routing.allocation.disk.threshold_enabled=true
-      - cluster.routing.allocation.disk.watermark.low=65%
-      - cluster.routing.allocation.disk.watermark.high=70%
-      - xpack.security.enabled=true
-      - xpack.security.audit.enabled=true
-      - ELASTIC_PASSWORD=somethingsecret
+    env_file:
+      ./elastic.env
     
   kibana:
     image: docker.elastic.co/kibana/kibana:7.15.0
-    container_name: kib01-test
+    container_name: kibana1
     networks:
       - kakfa-net
     ports:
       - 5601:5601
-    environment:
-      - ELASTICSEARCH_HOSTS=http://es01-test:9200
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=somethingsecret
+    env_file:
+      ./kibana.env
+
 
 networks:
   kakfa-net:
