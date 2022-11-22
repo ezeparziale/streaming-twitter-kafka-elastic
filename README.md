@@ -1,6 +1,6 @@
 # 🐦 Streaming tweets with kafka and elastic
 
-Demo of streaming tweets from twiiter and save it in elastic search.
+Demo of streaming tweets from twitter and save it in elastic search.
 
 - [X] Elastic search
 - [X] Kibana
