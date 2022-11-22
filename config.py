@@ -1,4 +1,6 @@
 from pydantic import BaseSettings
+
+
 class Settings(BaseSettings):
 
     # API KEYS DE TWIITER
@@ -12,7 +14,7 @@ class Settings(BaseSettings):
     TOPIC_NAME: str = "twitter"  # NOMBRE DEL TOPIC DE KAFKA
 
     # ELASTIC
-    ELASTIC_SERVER: str = 'localhost:9200'
+    ELASTIC_SERVER: str = "localhost:9200"
     ELASTICSEARCH_USERNAME: str
     ELASTICSEARCH_PASSWORD: str
 
