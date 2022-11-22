@@ -24,4 +24,6 @@ if __name__ == "__main__":
         settings.TWITTER_ACCESS_TOKEN_SECRET,
     )
 
-    stream.filter(track=settings.TRACKS, locations=settings.LOCATION, languages=settings.LANGUAGES)
+    stream.filter(
+        track=settings.TRACKS, locations=settings.LOCATION, languages=settings.LANGUAGES
+    )
