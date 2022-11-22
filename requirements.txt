@@ -1,5 +1,5 @@
 kafka-python==2.0.2
-tweepy==4.1.0
-confluent-kafka==1.7.0
-python-dotenv==0.19.1
+tweepy==4.12.1
+confluent-kafka==1.9.2
+elasticsearch==8.5.1
 elasticsearch==7.15.1
