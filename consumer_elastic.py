@@ -1,12 +1,12 @@
 from kafka import KafkaConsumer
 from elasticsearch import Elasticsearch
 import json
-import config
+from config import settings
 
 def main():             
-    consumer = KafkaConsumer(config.TOPIC_NAME)
+    consumer = KafkaConsumer(settings.TOPIC_NAME)
     try:
-        es = Elasticsearch(hosts=f"http://{config.ELASTIC_USER}:{config.ELASTIC_PASS}@{config.ELASTIC_SERVER}/")        
+        es = Elasticsearch(hosts=f"http://{settings.ELASTICSEARCH_USERNAME}:{settings.ELASTICSEARCH_PASSWORD}@{settings.ELASTIC_SERVER}/")        
         for msg in consumer:
             output = []
             output.append(json.loads(msg.value))
@@ -15,8 +15,7 @@ def main():
             # Inserta tweet a elastic
             es.index(
                     index="tweets",
-                    doc_type="test-type",
-                    body={
+                    document={
                         "author": tweet["user"]["screen_name"],
                         "fecha": tweet["created_at"],
                         "mensaje": tweet["text"]
