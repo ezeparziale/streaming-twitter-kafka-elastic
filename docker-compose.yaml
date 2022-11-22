@@ -1,8 +1,8 @@
-version: '3.8'
+version: "3.9"
 services:
 
   zoo-1:
-    image: confluentinc/cp-zookeeper:6.2.1
+    image: confluentinc/cp-zookeeper:7.3.0
     container_name: zoo-1
     hostname: zoo-1
     ports:
@@ -14,10 +14,10 @@ services:
     #   - ./volume/zookeeper/data:/data
     #   - ./volume/zookeeper/datalog:/datalog
     networks:
-      - kakfa-net
+      - kafka-net
 
   kafka-1:
-    image: confluentinc/cp-kafka:6.2.1
+    image: confluentinc/cp-kafka:7.3.0
     container_name: kafka-1
     hostname: kafka-1
     ports:
@@ -34,29 +34,32 @@ services:
     depends_on:
       - zoo-1
     networks:
-      - kakfa-net
+      - kafka-net
 
   elastic-search:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    image: elasticsearch:8.5.1
     container_name: elastic1
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
     networks:
-      - kakfa-net
+      - kafka-net
     ports:
       - 9200:9200
       - 9300:9300
-    env_file:
-      ./elastic.env
     
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.15.0
+    image: kibana:8.5.1
     container_name: kibana1
+    environment:
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}  
     networks:
-      - kakfa-net
+      - kafka-net
     ports:
       - 5601:5601
-    env_file:
-      ./kibana.env
-
+    depends_on:
+      - elastic-search
 
 networks:
-  kakfa-net:
+  kafka-net:
